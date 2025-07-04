@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AppHeader from "../components/AppHeader";
-import { 
-  Sparkles, 
-  Target, 
-  TrendingUp, 
-  BarChart3, 
-  ArrowRight, 
-  CheckCircle, 
+import {
+  Sparkles,
+  Target,
+  TrendingUp,
+  BarChart3,
+  ArrowRight,
+  CheckCircle,
   User,
   Shield,
   Brain
@@ -60,12 +60,12 @@ const StatusBadge = ({ icon: Icon, text, variant = "primary" }) => {
 };
 
 // Journey Option Card Component
-const JourneyCard = ({ 
-  icon: Icon, 
-  title, 
-  description, 
-  buttonText, 
-  onClick, 
+const JourneyCard = ({
+  icon: Icon,
+  title,
+  description,
+  buttonText,
+  onClick,
   variant = "primary",
   badge
 }) => {
@@ -83,7 +83,7 @@ const JourneyCard = ({
   };
 
   return (
-    <div 
+    <div
       className={`rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-1 ${variants[variant].card}`}
       onClick={onClick}
     >
@@ -108,9 +108,9 @@ const JourneyCard = ({
       </p>
 
       {/* Button */}
-      <Button 
-        variant={variants[variant].button} 
-        size="lg" 
+      <Button
+        variant={variants[variant].button}
+        size="lg"
         className="w-full group"
         onClick={(e) => {
           e.stopPropagation();
@@ -171,7 +171,9 @@ const UserJourneyPage = () => {
             Your profile is all set up. Pick your preferred path to start your investment journey.
           </p>
         </div>
-
+        <div className="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-700 p-4 rounded-md mb-4">
+          <strong>🚧 Alpha Disclaimer:</strong> This is an early alpha version of Shuny. Recommendations provided are based on limited data and may not always reflect optimal investment choices. Please review suggestions carefully before acting. Your feedback helps us improve!
+        </div>
         {/* Journey Options */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {/* Option 1: Get Recommendations */}

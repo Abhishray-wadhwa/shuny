@@ -2,10 +2,15 @@
 
 export async function getRecommendation(userProfile) {
     try {
+      const existingUserId = sessionStorage.getItem("userId");
+      const payload = {
+        ...userProfile,
+        user_id: existingUserId,
+      };
       const response = await fetch("http://localhost:8000/recommendation/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userProfile),
+        body: JSON.stringify(payload),
       });
   
       if (!response.ok) {
@@ -17,6 +22,9 @@ export async function getRecommendation(userProfile) {
   
       const data = await response.json();
       console.log("✅ Recommendation Response:", data);
+      if (data.user_id && !existingUserId) {
+        sessionStorage.setItem("userId", data.user_id);
+      }
       return data;
   
     } catch (error) {
