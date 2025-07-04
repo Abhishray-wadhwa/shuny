@@ -9,7 +9,7 @@ import {
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip as ChartTooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import { analyzePortfolio } from "../api/analyze";
-
+import config from '../config/config.js';
 // Register Chart.js components
 ChartJS.register(ArcElement, ChartTooltip, Legend, BarElement, CategoryScale, LinearScale);
 const Button = ({ children, className = "", variant = "primary", size = "md", ...props }) => {
@@ -316,6 +316,7 @@ const PortfolioAnalysisPage = ({ userProfile }) => {
   const [showBetaModal, setShowBetaModal] = useState(false);
   const hasFetchedRef = useRef(false);
   const navigate = useNavigate();
+  const apiUrls = `${config.apiUrl}/feedback/submit-feedback`;
   const totalSteps = 12;
   const handlePrevious = () => {
     if (currentStep > 0) {
@@ -327,7 +328,7 @@ const PortfolioAnalysisPage = ({ userProfile }) => {
     const [wantAccess, setWantAccess] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isValidEmail, setIsValidEmail] = useState(false);
-
+    const apiUrl = `${config.apiUrl}/beta/submit`;
     // Email validation
     useEffect(() => {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -345,7 +346,7 @@ const PortfolioAnalysisPage = ({ userProfile }) => {
       }
 
       try {
-        const res = await fetch("http://localhost:8000/beta/submit", {
+        const res = await fetch(apiUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -651,7 +652,7 @@ const PortfolioAnalysisPage = ({ userProfile }) => {
     };
 
     try {
-      const res = await fetch("http://localhost:8000/feedback/submit-feedback", {
+      const res = await fetch(apiUrls, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -1,6 +1,8 @@
+import config from '../config/config.js';
 export async function submitFeedback(userId, feedbackText, optionType) {
     try {
-      const response = await fetch("http://localhost:8000/feedback/submit-feedback", {
+      const apiUrl = `${config.apiUrl}/feedback/submit-feedback`;
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

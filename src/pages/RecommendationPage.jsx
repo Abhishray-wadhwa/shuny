@@ -10,7 +10,7 @@ import {
   ChevronRight, ThumbsUp, ThumbsDown, MessageSquare, Star,
   Zap, Building, Calculator, Clock, BarChart3
 } from "lucide-react";
-
+import config from '../config/config.js';
 // Enhanced Button Component
 const Button = ({ children, className = "", variant = "primary", size = "md", ...props }) => {
   const baseClasses = "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-opacity-30 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105";
@@ -1249,7 +1249,7 @@ const BetaAccessModal = ({ isOpen, onClose, recommendation }) => {
   const [wantAccess, setWantAccess] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
-
+  const apiUrl = `${config.apiUrl}/beta/submit`;
   // Email validation
   useEffect(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1267,7 +1267,7 @@ const BetaAccessModal = ({ isOpen, onClose, recommendation }) => {
     }
   
     try {
-      const res = await fetch("http://localhost:8000/beta/submit", {
+      const res = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -1430,6 +1430,7 @@ const SummaryFeedbackStep = ({ recommendation, onRestart }) => {
       setTimeout(() => setShowThanks(false), 3000);
     }
   };
+  const apiUrl = `${config.apiUrl}/feedback/submit-feedback`;
 
   const submitFeedback = async () => {
     const userId = sessionStorage.getItem("userId");
@@ -1441,7 +1442,7 @@ const SummaryFeedbackStep = ({ recommendation, onRestart }) => {
     const feedbackContent = feedback || (rating === 'positive' ? "Loved the recommendation!" : "");
   
     try {
-      const response = await fetch("http://localhost:8000/feedback/submit-feedback", {
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

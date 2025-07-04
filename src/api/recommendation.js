@@ -1,5 +1,5 @@
 // src/api/recommendation.js
-
+import config from '../config/config.js';
 export async function getRecommendation(userProfile) {
     try {
       const existingUserId = sessionStorage.getItem("userId");
@@ -7,7 +7,8 @@ export async function getRecommendation(userProfile) {
         ...userProfile,
         user_id: existingUserId,
       };
-      const response = await fetch("http://localhost:8000/recommendation/recommend", {
+      const apiUrl = `${config.apiUrl}/recommendation/recommend`;
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
