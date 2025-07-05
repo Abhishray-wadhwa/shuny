@@ -6,7 +6,7 @@ const config = {
       debug: true
     },
     production: {
-      apiUrl: 'https://shuny.in',
+      apiUrl: 'https://shuny-backend.onrender.com',
       environment: 'production',
       debug: false
     }
