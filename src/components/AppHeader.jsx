@@ -55,30 +55,45 @@ const ShunyLogo = ({ className = "", textSize = "text-3xl" }) => {
   );
 };
 
-// Navigation Links Component (for reusability)
+// Fixed Navigation Links Component
 const NavLinks = ({ className = "", onClick = () => {} }) => {
-  const linkClasses = "text-[#0E1117] hover:text-[#FF5E5B] transition-colors duration-200 relative group font-medium";
+  const linkClasses = "text-[#0E1117] hover:text-[#FF5E5B] transition-colors duration-200 relative group font-medium cursor-pointer block py-2";
   const underlineClasses = "absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF5E5B] transition-all duration-200 group-hover:w-full";
+
+  const handleLinkClick = (sectionId) => {
+    onClick(); // Close mobile menu
+    
+    // Smooth scroll to section
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    } else {
+      console.warn(`Element with ID '${sectionId}' not found`);
+    }
+  };
 
   return (
     <nav className={className}>
-      <a href="#features" className={linkClasses} onClick={onClick}>
+      <div className={linkClasses} onClick={() => handleLinkClick('features')}>
         Features
         <span className={underlineClasses}></span>
-      </a>
-      <a href="#whyshuny" className={linkClasses} onClick={onClick}>
+      </div>
+      <div className={linkClasses} onClick={() => handleLinkClick('whyshuny')}>
         Why Shuny
         <span className={underlineClasses}></span>
-      </a>
-      <a href="#how-it-works" className={linkClasses} onClick={onClick}>
+      </div>
+      <div className={linkClasses} onClick={() => handleLinkClick('how-it-works')}>
         How Shuny Works
         <span className={underlineClasses}></span>
-      </a>
+      </div>
     </nav>
   );
 };
 
-// AppHeader Component with Better Mobile/Desktop Separation
+// Fixed AppHeader Component with Better Mobile Menu
 const AppHeader = ({ showBackButton = false, onBackButtonClick, showNavLinks = true }) => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -92,19 +107,21 @@ const AppHeader = ({ showBackButton = false, onBackButtonClick, showNavLinks = t
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside or on links
+  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isMobileMenuOpen && !event.target.closest('.mobile-menu-container')) {
-        setIsMobileMenuOpen(false);
-      }
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
     };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
   }, [isMobileMenuOpen]);
 
-  const toggleMobileMenu = () => {
+  const toggleMobileMenu = (e) => {
+    e.stopPropagation();
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
@@ -113,91 +130,104 @@ const AppHeader = ({ showBackButton = false, onBackButtonClick, showNavLinks = t
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-transparent'
-    }`}>
-      <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 max-w-7xl mx-auto">
-        {/* Logo */}
-        <ShunyLogo textSize="text-2xl" />
+    <>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-transparent'
+      }`}>
+        <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 max-w-7xl mx-auto">
+          {/* Logo */}
+          <ShunyLogo textSize="text-2xl" />
 
-        {/* Desktop Navigation - Only show on desktop */}
-        {showNavLinks && (
-          <div className="hidden lg:flex items-center space-x-8">
-            <NavLinks className="flex space-x-8 text-base" />
-          </div>
-        )}
-
-        {/* Desktop CTA Button - Only show on desktop */}
-        <div className="hidden lg:flex items-center">
-          {showBackButton ? (
-            <Button variant="ghost" size="md" onClick={onBackButtonClick || (() => navigate("/"))}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Home
-            </Button>
-          ) : (
-            <Button variant="primary" size="md" onClick={() => navigate("/profile")}>
-              Get Early Access
-            </Button>
-          )}
-        </div>
-
-        {/* Mobile Navigation Container */}
-        <div className="lg:hidden flex items-center space-x-3 mobile-menu-container">
-          {/* Mobile CTA Button - Always visible on mobile */}
-          {showBackButton ? (
-            <Button variant="ghost" size="sm" onClick={onBackButtonClick || (() => navigate("/"))}>
-              <ArrowLeft className="w-4 h-4" />
-            </Button>
-          ) : (
-            <Button variant="primary" size="sm" onClick={() => navigate("/profile")}>
-              Access
-            </Button>
-          )}
-
-          {/* Mobile Menu Toggle - Only show if nav links are enabled */}
+          {/* Desktop Navigation - Only show on desktop */}
           {showNavLinks && (
-            <button
-              className="text-[#0E1117] hover:text-[#FF5E5B] focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              onClick={toggleMobileMenu}
-              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            <div className="hidden lg:flex items-center space-x-8">
+              <NavLinks className="flex space-x-8 text-base" />
+            </div>
           )}
-        </div>
-      </div>
 
-      {/* Mobile Navigation Menu */}
-      {showNavLinks && (
-        <div className={`lg:hidden transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen 
-            ? 'max-h-96 opacity-100 visible' 
-            : 'max-h-0 opacity-0 invisible'
-        } overflow-hidden bg-white/95 backdrop-blur-md shadow-md border-t border-gray-200`}>
-          <div className="px-4 py-6 space-y-4">
-            <NavLinks 
-              className="flex flex-col space-y-4 text-center text-base" 
-              onClick={closeMobileMenu}
-            />
-            
-            {/* Mobile CTA Button in Menu */}
-            <div className="pt-4 border-t border-gray-200">
-              <Button
-                variant="primary"
-                size="md"
-                onClick={() => {
-                  navigate("/profile");
-                  closeMobileMenu();
-                }}
-                className="w-full"
-              >
+          {/* Desktop CTA Button - Only show on desktop */}
+          <div className="hidden lg:flex items-center">
+            {showBackButton ? (
+              <Button variant="ghost" size="md" onClick={onBackButtonClick || (() => navigate("/"))}>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Home
+              </Button>
+            ) : (
+              <Button variant="primary" size="md" onClick={() => navigate("/profile")}>
                 Get Early Access
               </Button>
+            )}
+          </div>
+
+          {/* Mobile Navigation Container */}
+          <div className="lg:hidden flex items-center space-x-3">
+            {/* Mobile CTA Button - Always visible on mobile */}
+            {showBackButton ? (
+              <Button variant="ghost" size="sm" onClick={onBackButtonClick || (() => navigate("/"))}>
+                <ArrowLeft className="w-4 h-4" />
+              </Button>
+            ) : (
+              <Button variant="primary" size="sm" onClick={() => navigate("/profile")}>
+                Access
+              </Button>
+            )}
+
+            {/* Mobile Menu Toggle - Only show if nav links are enabled */}
+            {showNavLinks && (
+              <button
+                className="text-[#0E1117] hover:text-[#FF5E5B] focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 z-60"
+                onClick={toggleMobileMenu}
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              >
+                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Navigation Menu - Now positioned separately */}
+      {showNavLinks && (
+        <div className={`lg:hidden fixed inset-0 z-40 transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen 
+            ? 'opacity-100 visible' 
+            : 'opacity-0 invisible pointer-events-none'
+        }`}>
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/20 backdrop-blur-sm" 
+            onClick={closeMobileMenu}
+          />
+          
+          {/* Menu Content */}
+          <div className={`absolute top-[80px] left-0 right-0 bg-white shadow-xl border-t border-gray-200 transform transition-transform duration-300 ease-in-out ${
+            isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
+          }`}>
+            <div className="px-6 py-8 space-y-6">
+              <NavLinks 
+                className="flex flex-col space-y-6 text-center text-lg" 
+                onClick={closeMobileMenu}
+              />
+              
+              {/* Mobile CTA Button in Menu */}
+              <div className="pt-6 border-t border-gray-200">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={() => {
+                    navigate("/profile");
+                    closeMobileMenu();
+                  }}
+                  className="w-full"
+                >
+                  Get Early Access
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 };
 
