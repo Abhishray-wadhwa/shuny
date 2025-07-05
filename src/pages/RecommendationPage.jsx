@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FundCards from "../components/FundCards";
 import { getRecommendation } from "../api/recommendation";
@@ -11,6 +11,7 @@ import {
   Zap, Building, Calculator, Clock, BarChart3
 } from "lucide-react";
 import config from '../config/config.js';
+
 // Enhanced Button Component
 const Button = ({ children, className = "", variant = "primary", size = "md", ...props }) => {
   const baseClasses = "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-opacity-30 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105";
@@ -25,10 +26,10 @@ const Button = ({ children, className = "", variant = "primary", size = "md", ..
   };
 
   const sizes = {
-    sm: "px-3 py-2 text-sm rounded-lg sm:px-4",
-    md: "px-4 py-2.5 text-sm rounded-xl sm:px-6 sm:py-3 sm:text-base",
-    lg: "px-6 py-3 text-base rounded-xl sm:px-8 sm:py-4 sm:text-lg",
-    xl: "px-8 py-4 text-lg rounded-xl sm:px-10 sm:py-5 sm:text-xl"
+    sm: "px-2 py-1 text-xs rounded-lg",
+    md: "px-3 py-2 text-sm rounded-xl",
+    lg: "px-4 py-2.5 text-sm rounded-xl",
+    xl: "px-6 py-3 text-base rounded-xl"
   };
 
   return (
@@ -54,7 +55,7 @@ const Card = ({ children, className = "", variant = "default", ...props }) => {
 
   return (
     <div
-      className={`rounded-2xl p-3 sm:p-4 md:p-6 transition-all duration-300 ${variants[variant]} ${className}`}
+      className={`rounded-2xl p-4 transition-all duration-300 ${variants[variant]} ${className}`}
       {...props}
     >
       {children}
@@ -67,14 +68,14 @@ const StepProgress = ({ currentStep, totalSteps }) => {
   const percentage = ((currentStep + 1) / totalSteps) * 100;
   
   return (
-    <div className="w-full mb-8">
+    <div className="w-full mb-6">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium text-gray-600">Step {currentStep + 1} of {totalSteps}</span>
-        <span className="text-sm font-medium text-[#FF5E5B]">{Math.round(percentage)}%</span>
+        <span className="text-xs font-medium text-gray-600">Step {currentStep + 1} of {totalSteps}</span>
+        <span className="text-xs font-medium text-[#FF5E5B]">{Math.round(percentage)}%</span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2">
+      <div className="w-full bg-gray-200 rounded-full h-1.5">
         <div 
-          className="bg-gradient-to-r from-[#FF5E5B] to-[#32D6A0] h-2 rounded-full transition-all duration-500 ease-out"
+          className="bg-gradient-to-r from-[#FF5E5B] to-[#32D6A0] h-1.5 rounded-full transition-all duration-500 ease-out"
           style={{ width: `${percentage}%` }}
         />
       </div>
@@ -102,7 +103,7 @@ const AnimatedNumber = ({ value, prefix = "", suffix = "", duration = 2000 }) =>
   }, [value, duration]);
 
   return (
-    <span className="font-bold text-2xl md:text-3xl">
+    <span className="font-bold text-lg md:text-2xl">
       {prefix}{displayValue.toLocaleString()}{suffix}
     </span>
   );
@@ -132,45 +133,45 @@ const LoadingRecommendations = () => {
   }, []);
 
   return (
-    <div className="space-y-4 sm:space-y-6 md:space-y-8 px-4 sm:px-0">
+    <div className="space-y-4 px-4">
       <div className="text-center">
-        <div className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full mb-4 sm:mb-6 bg-blue-100 text-blue-600">
-          <Brain className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-          <span className="text-xs sm:text-sm font-medium">AI Processing</span>
+        <div className="inline-flex items-center px-2 py-1 rounded-full mb-4 bg-blue-100 text-blue-600 text-xs">
+          <Brain className="w Dolores h-3 w-3 mr-1" />
+          <span className="text-xs font-medium">AI Processing</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#0E1117] mb-3 sm:mb-4 leading-tight px-4 sm:px-0">
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           Creating Your Investment Strategy
         </h1>
-        <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed px-4 sm:px-0">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           Our AI is analyzing thousands of funds to find the perfect match for your goals.
         </p>
       </div>
 
-      <Card className="text-center p-8 sm:p-12 md:p-16">
-        <div className="relative mb-6 sm:mb-8">
-          <div className="animate-spin w-16 h-16 sm:w-20 sm:h-20 border-4 border-[#FF5E5B]/20 border-t-[#FF5E5B] rounded-full mx-auto"></div>
+      <Card className="text-center p-6">
+        <div className="relative mb-4">
+          <div className="animate-spin w-12 h-12 border-4 border-[#FF5E5B]/20 border-t-[#FF5E5B] rounded-full mx-auto"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#FF5E5B] to-[#e14c4a] rounded-full flex items-center justify-center">
-              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white animate-pulse" />
+            <div className="w-8 h-8 bg-gradient-to-br from-[#FF5E5B] to-[#e14c4a] rounded-full flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-white animate-pulse" />
             </div>
           </div>
         </div>
 
-        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0E1117] mb-3 sm:mb-4 transition-all duration-500 px-2 sm:px-0">
+        <h3 className="text-base md:text-lg font-bold text-[#0E1117] mb-3 transition-all duration-500">
           {loadingText}
         </h3>
         
-        <div className="flex justify-center space-x-2 mb-6 sm:mb-8">
-          {[0, 1, 2, 3, 4].map((i) => (
+        <div className="flex justify-center space-x-2 mb-4">
+         , {[0, 1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className="w-2 h-2 bg-[#FF5E5B] rounded-full animate-pulse"
+              className="w-1.5 h-1.5 bg-[#FF5E5B] rounded-full animate-pulse"
               style={{ animationDelay: `${i * 0.2}s` }}
             ></div>
           ))}
         </div>
 
-        <p className="text-gray-600 text-sm sm:text-base md:text-lg max-w-md mx-auto leading-relaxed px-4 sm:px-0">
+        <p className="text-gray-600 text-xs md:text-sm max-w-md mx-auto">
           This usually takes 10-15 seconds. We're ensuring every recommendation is perfectly tailored to your needs.
         </p>
       </Card>
@@ -183,18 +184,11 @@ const parseMarkdown = (text) => {
   if (!text) return text;
   
   return text
-    // Headers - Convert # to styled headings
-    .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold text-[#0E1117] mt-6 mb-3">$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold text-[#0E1117] mt-8 mb-4">$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold text-[#0E1117] mt-8 mb-6">$1</h1>')
-    
-    // Bold text - Convert **text** to <strong>
+    .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold text-[#0E1117] mt-4 mb-2">$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold text-[#0E1117] mt-6 mb-3">$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold text-[#0E1117] mt-6 mb-4">$1</h1>')
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-[#FF5E5B]">$1</strong>')
-    
-    // Bullet points - Convert - to styled list items
-    .replace(/^- (.*$)/gim, '<li class="flex items-start mb-2"><span class="text-[#32D6A0] mr-2 mt-1">•</span><span>$1</span></li>')
-    
-    // Emojis and special formatting
+    .replace(/^- (.*$)/gim, '<li class="flex items-start mb-1"><span class="text-[#32D6A0] mr-2 mt-0.5">•</span><span>$1</span></li>')
     .replace(/🌟/g, '<span class="text-yellow-500">🌟</span>')
     .replace(/👋/g, '<span class="animate-pulse">👋</span>')
     .replace(/🎯/g, '<span class="text-red-500">🎯</span>')
@@ -204,116 +198,108 @@ const parseMarkdown = (text) => {
     .replace(/🌈/g, '<span class="text-purple-500">🌈</span>')
     .replace(/🌱/g, '<span class="text-green-500">🌱</span>')
     .replace(/🎉/g, '<span class="text-pink-500">🎉</span>')
-    
-    // Line breaks
-    .replace(/\n\n/g, '</p><p class="mb-4">')
+    .replace(/\n\n/g, '</p><p class="mb-3">')
     .replace(/\n/g, '<br>');
 };
 
-// Replace the existing StoryStep component with this updated version
+// Updated StoryStep component
 const StoryStep = ({ recommendation, onNext }) => {
   const processStoryContent = (story) => {
     if (!story) return '';
     
     const parsed = parseMarkdown(story);
     
-    // Wrap content in paragraphs and handle lists
-    let content = `<p class="mb-4">${parsed}</p>`;
+    let content = `<p class="mb-3">${parsed}</p>`;
     
-    // Fix list formatting
-    content = content.replace(/(<li.*?<\/li>)/g, (match, li) => {
-      return li;
-    });
-    
-    // Wrap consecutive list items in ul tags
     content = content.replace(/(<li.*?<\/li>)(\s*<li.*?<\/li>)*/g, (match) => {
-      return `<ul class="space-y-2 mb-6 ml-4">${match}</ul>`;
+      return `<ul class="space-y-1 mb-4 ml-4">${match}</ul>`;
     });
     
     return content;
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 md:space-y-8 animate-fadeIn px-4 sm:px-0">
-    <div className="text-center">
-      <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">🎯</div>
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0E1117] mb-3 sm:mb-4 px-4 sm:px-0">
-        Your Investment Journey Begins Here
-      </h1>
-      <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">
-        Let's turn your dreams into a concrete plan with personalized recommendations
-      </p>
-    </div>
+    <div className="space-y-4 px-4">
+      <div className="text-center">
+        <div className="text-4xl mb-3">🎯</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
+          Your Investment Journey Begins Here
+        </h1>
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
+          Let's turn your dreams into a concrete plan with personalized recommendations
+        </p>
+      </div>
 
-    {recommendation.story && (
-      <Card variant="success" className="text-left">
-        <div className="flex items-center justify-center mb-4 sm:mb-6">
-          <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-[#32D6A0] mr-2 sm:mr-3" />
-          <h3 className="text-lg sm:text-xl font-bold text-[#0E1117]">Your Personalized Story</h3>
-        </div>
-        <div 
-          className="text-gray-700 leading-relaxed text-sm sm:text-base prose prose-sm sm:prose-lg max-w-none"
-          dangerouslySetInnerHTML={{ 
-            __html: processStoryContent(recommendation.story) 
-          }}
-        />
-      </Card>
-    )}
+      {recommendation.story && (
+        <Card variant="success" className="text-left">
+          <div className="flex items-center justify-center mb-4">
+            <BookOpen className="w-4 h-4 md:w-5 text-[#32D6A0] mr-2" />
+            <h3 className="text-base md:text-lg font-bold text-[#0E1117]">Your Personalized Story</h3>
+          </div>
+          <div 
+            className="text-gray-700 text-sm md:text-base prose prose-sm max-w-none"
+            dangerouslySetInnerHTML={{ 
+              __html: processStoryContent(recommendation.story) 
+            }}
+          />
+        </Card>
+      )}
 
-    <div className="text-center">
-      <Button variant="primary" size="lg" onClick={onNext}>
-        <span className="hidden sm:inline">Let's Build Your Plan 🚀</span>
-        <span className="sm:hidden">Build Plan 🚀</span>
-        <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
-      </Button>
+      <div className="text-center">
+        <Button variant="primary" size="lg" onClick={onNext} className="w-full sm:w-auto">
+          <span className="text-sm md:text-base">Let's Build Your Plan 🚀</span>
+          <ArrowRight className="ml-2 w-4 h-4" />
+        </Button>
+      </div>
     </div>
-  </div>
   );
 };
+
+// Updated SIPSummaryStep component
 const SIPSummaryStep = ({ recommendation, onNext }) => {
   const sipAmount = recommendation.suggested_sip || 0;
   const targetCorpus = recommendation.target_corpus || 0;
-  const monthlyIncome = recommendation.monthly_income || 50000; // Fallback
+  const monthlyIncome = recommendation.monthly_income || 50000;
   const sipPercentage = Math.round((sipAmount / monthlyIncome) * 100);
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 px-4">
       <div className="text-center">
-        <div className="text-6xl mb-4">💰</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[#0E1117] mb-4">
+        <div className="text-4xl mb-3">💰</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           Your Investment Blueprint
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           This monthly SIP brings you one step closer to your dreams ✨
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Card variant="primary" className="text-center">
-          <Target className="w-8 h-8 text-[#FF5E5B] mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-[#0E1117] mb-2">Target Corpus 🎯</h3>
+          <Target className="w-6 h-6 text-[#FF5E5B] mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-[#0E1117] mb-2">Target Corpus 🎯</h3>
           <div className="text-[#FF5E5B]">
             <AnimatedNumber value={targetCorpus} prefix="₹" />
           </div>
-          <p className="text-sm text-gray-600 mt-2">Your dream amount</p>
+          <p className="text-xs text-gray-600 mt-2">Your dream amount</p>
         </Card>
 
         <Card variant="secondary" className="text-center">
-          <Coins className="w-8 h-8 text-[#32D6A0] mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-[#0E1117] mb-2">Monthly SIP 🚀</h3>
+          <Coins className="w-6 h-6 text-[#32D6A0] mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-[#0E1117] mb-2">Monthly SIP 🚀</h3>
           <div className="text-[#32D6A0]">
             <AnimatedNumber value={sipAmount} prefix="₹" />
           </div>
-          <p className="text-sm text-gray-600 mt-2">{sipPercentage}% of your income</p>
+          <p className="text-xs text-gray-600 mt-2">{sipPercentage}% of your income</p>
         </Card>
       </div>
 
       <Card className="text-center">
-        <div className="flex items-center justify-center mb-4">
-          <Heart className="w-6 h-6 text-red-500 mr-2" />
-          <span className="font-semibold">The Sweet Spot</span>
+        <div className="flex items-center justify-center mb-3">
+          <Heart className="w-4 h-4 text-red-500 mr-2" />
+          <span className="text-sm font-semibold">The Sweet Spot</span>
         </div>
-        <p className="text-gray-700 leading-relaxed">
+        <p className="text-gray-700 text-xs md:text-sm">
           {sipPercentage < 10 ? 
             `🌟 Perfect! This ${sipPercentage}% allocation gives you great growth potential while keeping your lifestyle comfortable.` :
             sipPercentage <= 20 ?
@@ -322,9 +308,9 @@ const SIPSummaryStep = ({ recommendation, onNext }) => {
           }
         </p>
         {recommendation.affordability_issue && (
-          <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
-            <AlertTriangle className="w-5 h-5 text-amber-600 inline mr-2" />
-            <span className="text-amber-700">
+          <div className="mt-3 p-3 bg-amber-50 rounded-lg border border-amber-200">
+            <AlertTriangle className="w-4 h-4 text-amber-600 inline mr-2" />
+            <span className="text-amber-700 text-xs">
               Consider starting with a smaller amount and increasing gradually as your income grows.
             </span>
           </div>
@@ -332,15 +318,16 @@ const SIPSummaryStep = ({ recommendation, onNext }) => {
       </Card>
 
       <div className="text-center">
-        <Button variant="primary" size="lg" onClick={onNext}>
+        <Button variant="primary" size="lg" onClick={onNext} className="w-full sm:w-auto">
           Show Me the Allocation 📊
-          <ArrowRight className="ml-2 w-5 h-5" />
+          <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
       </div>
     </div>
   );
 };
 
+// Updated AllocationStep component
 const AllocationStep = ({ recommendation, onNext }) => {
   const allocation = recommendation.recommended_allocation || {};
   const equity = allocation.equity || 0;
@@ -361,88 +348,82 @@ const AllocationStep = ({ recommendation, onNext }) => {
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 px-4">
       <div className="text-center">
-        <div className="text-6xl mb-4">🥧</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[#0E1117] mb-4">
+        <div className="text-4xl mb-3">🥧</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           Your Asset Mix
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           Here's how we'll spread your investments for optimal returns
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card variant="primary" className="text-center">
-          <TrendingUp className="w-8 h-8 text-[#FF5E5B] mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-[#0E1117] mb-2">Equity 🚀</h3>
-          <div className="text-3xl font-bold text-[#FF5E5B] mb-2">{(equity*100).toFixed(2)}%</div>
-          <p className="text-sm text-gray-600">Your wealth builders</p>
+          <TrendingUp className="w-6 h-6 text-[#FF5E5B] mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-[#0E1117] mb-2">Equity 🚀</h3>
+          <div className="text-xl font-bold text-[#FF5E5B] mb-2">{(equity*100).toFixed(2)}%</div>
+          <p className="text-xs text-gray-600">Your wealth builders</p>
         </Card>
 
         <Card variant="info" className="text-center">
-          <Shield className="w-8 h-8 text-blue-600 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-[#0E1117] mb-2">Debt 🛡️</h3>
-          <div className="text-3xl font-bold text-blue-600 mb-2">{(debt*100).toFixed(2)}%</div>
-          <p className="text-sm text-gray-600">Your safety net</p>
+          <Shield className="w-6 h-6 text-blue-600 mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-[#0E1117] mb-2">Debt 🛡️</h3>
+          <div className="text-xl font-bold text-blue-600 mb-2">{(debt*100).toFixed(2)}%</div>
+          <p className="text-xs text-gray-600">Your safety net</p>
         </Card>
 
         <Card variant="warning" className="text-center">
-          <Coins className="w-8 h-8 text-amber-600 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-[#0E1117] mb-2">Gold ✨</h3>
-          <div className="text-3xl font-bold text-amber-600 mb-2">{(gold*100).toFixed(2)}%</div>
-          <p className="text-sm text-gray-600">Your hedge</p>
+          <Coins className="w-6 h-6 text-amber-600 mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-[#0E1117] mb-2">Gold ✨</h3>
+          <div className="text-xl font-bold text-amber-600 mb-2">{(gold*100).toFixed(2)}%</div>
+          <p className="text-xs text-gray-600">Your hedge</p>
         </Card>
       </div>
 
       <Card className="text-center">
-        <div className="flex items-center justify-center mb-4">
-          <Brain className="w-6 h-6 text-blue-600 mr-2" />
-          <span className="font-semibold">AI Insight</span>
+        <div className="flex items-center justify-center mb-3">
+          <Brain className="w-4 h-4 text-blue-600 mr-2" />
+          <span className="text-sm font-semibold">AI Insight</span>
         </div>
-        <p className="text-gray-700 leading-relaxed mb-4">
+        <p className="text-gray-700 text-xs md:text-sm mb-3">
           {getAllocationInsight()}
         </p>
-        <p className="text-gray-600 text-sm">
+        <p className="text-gray-600 text-xs">
           {getGoldInsight()}
         </p>
       </Card>
 
       <div className="text-center">
-        <Button variant="primary" size="lg" onClick={onNext}>
+        <Button variant="primary" size="lg" onClick={onNext} className="w-full sm:w-auto">
           Show Me the Funds 🎯
-          <ArrowRight className="ml-2 w-5 h-5" />
+          <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
       </div>
     </div>
   );
 };
 
-// Helper function to extract funds from nested structure - can be reused
-// Helper function to extract funds from nested structure - can be reused
+// Helper function to extract funds from nested structure
 const getFundsFromRecommendation = (recommendation) => {
   const recommendedFunds = recommendation?.recommended_funds;
   
-  // If it's already an array, return it
   if (Array.isArray(recommendedFunds)) {
     return recommendedFunds;
   }
   
-  // If it's an object with equity/debt/gold properties, flatten them
   if (recommendedFunds && typeof recommendedFunds === 'object') {
     const allFunds = [];
     
-    // Add equity funds
     if (Array.isArray(recommendedFunds.equity)) {
       allFunds.push(...recommendedFunds.equity);
     }
     
-    // Add debt funds
     if (Array.isArray(recommendedFunds.debt)) {
       allFunds.push(...recommendedFunds.debt);
     }
     
-    // Add gold funds if they exist
     if (Array.isArray(recommendedFunds.gold)) {
       allFunds.push(...recommendedFunds.gold);
     }
@@ -453,9 +434,8 @@ const getFundsFromRecommendation = (recommendation) => {
   return [];
 };
 
-// Defensive FundCards component to handle array issues
+// Defensive FundCards component
 const SafeFundCards = ({ funds }) => {
-  // Double-check that funds is an array
   if (!Array.isArray(funds)) {
     console.error('FundCards received non-array data:', funds);
     return (
@@ -474,14 +454,14 @@ const SafeFundCards = ({ funds }) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {funds.map((fund, index) => (
-        <div key={fund.code || index} className="border rounded-lg p-4 bg-white shadow-sm">
+        <div key={fund.code || index} className="border rounded-lg p-3 bg-white shadow-sm">
           <div className="flex justify-between items-start mb-2">
-            <h3 className="font-semibold text-lg text-gray-900">{fund.name}</h3>
-            <span className="text-sm text-gray-500">{fund.category}</span>
+            <h3 className="text-sm font-semibold text-gray-900">{fund.name}</h3>
+            <span className="text-xs text-gray-500">{fund.category}</span>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+          <div className="grid grid-cols-2 gap-2 text-xs">
             <div>
               <span className="text-gray-500">NAV:</span>
               <span className="ml-1 font-medium">₹{fund.nav?.toFixed(2)}</span>
@@ -505,83 +485,67 @@ const SafeFundCards = ({ funds }) => {
   );
 };
 
+// Updated FundsStep component
 const FundsStep = ({ recommendation, onNext }) => {
   const funds = getFundsFromRecommendation(recommendation);
-  
-  // Ensure funds is always an array
   const safeFunds = Array.isArray(funds) ? funds : [];
   
-  const hasEquityFunds = safeFunds.some(fund => fund.category?.toLowerCase().includes('equity') || fund.category?.toLowerCase().includes('large cap'));
-  const hasDebtFunds = safeFunds.some(fund => fund.category?.toLowerCase().includes('debt') || fund.category?.toLowerCase().includes('liquid'));
-
-  console.log('🔍 Funds Debug:', {
-    recommendedFunds: recommendation?.recommended_funds,
-    extractedFunds: funds,
-    safeFunds: safeFunds,
-    fundsCount: safeFunds.length,
-    hasEquityFunds,
-    hasDebtFunds,
-    fundsType: typeof funds,
-    isArray: Array.isArray(funds)
-  });
-
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 px-4">
       <div className="text-center">
-        <div className="text-6xl mb-4">🏆</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[#0E1117] mb-4">
+        <div className="text-4xl mb-3">🏆</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           Your Champion Funds
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           Hand-picked winners from thousands of options just for you
         </p>
       </div>
 
       {safeFunds.length > 0 ? (
-        <div className="space-y-6">
+        <div className="space-y-4">
           <Card>
-            <div className="flex items-center mb-6">
-              <Sparkles className="w-6 h-6 text-[#FF5E5B] mr-3" />
-              <h2 className="text-xl md:text-2xl font-bold text-[#0E1117]">
+            <div className="flex items-center mb-4">
+              <Sparkles className="w-4 h-4 text-[#FF5E5B] mr-2" />
+              <h2 className="text-base md:text-lg font-bold text-[#0E1117]">
                 Recommended Funds ({safeFunds.length} funds)
               </h2>
             </div>
             <SafeFundCards funds={safeFunds} />
           </Card>
 
-          {/* Fund Categories Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Card variant="primary" className="text-center">
-              <div className="text-2xl font-bold text-[#FF5E5B]">
+              <div className="text-xl font-bold text-[#FF5E5B]">
                 {recommendation?.recommended_funds?.equity?.length || 0}
               </div>
-              <div className="text-sm text-gray-600">Equity Funds 🚀</div>
+              <div className="text-xs text-gray-600">Equity Funds 🚀</div>
             </Card>
             <Card variant="info" className="text-center">
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-xl font-bold text-blue-600">
                 {recommendation?.recommended_funds?.debt?.length || 0}
               </div>
-              <div className="text-sm text-gray-600">Debt Funds 🛡️</div>
+              <div className="text-xs text-gray-600">Debt Funds 🛡️</div>
             </Card>
             <Card variant="warning" className="text-center">
-              <div className="text-2xl font-bold text-amber-600">
+              <div className="text-xl font-bold text-amber-600">
                 {recommendation?.recommended_funds?.gold?.length || 0}
               </div>
-              <div className="text-sm text-gray-600">Gold Funds ✨</div>
+              <div className="text-xs text-gray-600">Gold Funds ✨</div>
             </Card>
           </div>
         </div>
       ) : (
         <Card variant="warning" className="text-center">
-          <AlertTriangle className="w-12 h-12 text-amber-600 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-amber-800 mb-4">Fund Data Loading...</h3>
-          <p className="text-amber-700 leading-relaxed mb-6">
+          <AlertTriangle className="w-8 h-8 text-amber-600 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-amber-800 mb-3">Fund Data Loading...</h3>
+          <p className="text-amber-700 text-xs md:text-sm mb-4">
             ⚠️ We couldn't fetch the best funds right now. This happens sometimes in our alpha version. 
             Don't worry - your allocation strategy is solid!
           </p>
-          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
-            <p className="text-amber-800 font-medium mb-2">💡 What you can do:</p>
-            <ul className="text-amber-700 text-sm space-y-1 text-left">
+          <div className="bg-amber-50 rounded-lg p-3 border border-amber-200">
+            <p className="text-amber-800 font-medium mb-2 text-xs">💡 What you can do:</p>
+            <ul className="text-amber-700 text-xs space-y-1 text-left">
               <li>• Try refreshing in a few minutes</li>
               <li>• Your allocation percentages are ready to use</li>
               <li>• Our team can help you choose funds manually</li>
@@ -591,14 +555,16 @@ const FundsStep = ({ recommendation, onNext }) => {
       )}
 
       <div className="text-center">
-        <Button variant="primary" size="lg" onClick={onNext}>
+        <Button variant="primary" size="lg" onClick={onNext} className="w-full sm:w-auto">
           Check Emergency Fund 🆘
-          <ArrowRight className="ml-2 w-5 h-5" />
+          <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
       </div>
     </div>
   );
 };
+
+// Updated EmergencyFundStep component
 const EmergencyFundStep = ({ recommendation, onNext }) => {
   const emergencyFund = recommendation.emergency_fund_status || {};
   const current = emergencyFund.current_amount || 0;
@@ -607,64 +573,64 @@ const EmergencyFundStep = ({ recommendation, onNext }) => {
   const isHealthy = gap <= 0;
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 px-4">
       <div className="text-center">
-        <div className="text-6xl mb-4">🆘</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[#0E1117] mb-4">
+        <div className="text-4xl mb-3">🆘</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           Emergency Fund Check
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           Your financial safety net - the foundation of smart investing
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card className="text-center">
-          <CheckCircle className="w-8 h-8 text-[#32D6A0] mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-[#0E1117] mb-2">Current Fund 💰</h3>
-          <div className="text-2xl font-bold text-[#32D6A0]">₹{current.toLocaleString()}</div>
+          <CheckCircle className="w-6 h-6 text-[#32D6A0] mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-[#0E1117] mb-2">Current Fund 💰</h3>
+          <div className="text-xl font-bold text-[#32D6A0]">₹{current.toLocaleString()}</div>
         </Card>
 
         <Card className="text-center">
-          <Target className="w-8 h-8 text-blue-600 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-[#0E1117] mb-2">Required Fund 🎯</h3>
-          <div className="text-2xl font-bold text-blue-600">₹{required.toLocaleString()}</div>
+          <Target className="w-6 h-6 text-blue-600 mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-[#0E1117] mb-2">Required Fund 🎯</h3>
+          <div className="text-xl font-bold text-blue-600">₹{required.toLocaleString()}</div>
         </Card>
 
         <Card className={`text-center ${isHealthy ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
           {isHealthy ? (
-            <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-4" />
+            <CheckCircle className="w-6 h-6 text-green-600 mx-auto mb-3" />
           ) : (
-            <AlertTriangle className="w-8 h-8 text-red-600 mx-auto mb-4" />
+            <AlertTriangle className="w-6 h-6 text-red-600 mx-auto mb-3" />
           )}
-          <h3 className="text-lg font-semibold text-[#0E1117] mb-2">Gap {isHealthy ? '✅' : '⚠️'}</h3>
-          <div className={`text-2xl font-bold ${isHealthy ? 'text-green-600' : 'text-red-600'}`}>
+          <h3 className="text-base font-semibold text-[#0E1117] mb-2">Gap {isHealthy ? '✅' : '⚠️'}</h3>
+          <div className={`text-xl font-bold ${isHealthy ? 'text-green-600' : 'text-red-600'}`}>
             {isHealthy ? 'All Good!' : `₹${gap.toLocaleString()}`}
           </div>
         </Card>
       </div>
 
       <Card variant={isHealthy ? "success" : "warning"}>
-        <div className="flex items-center mb-4">
+        <div className="flex items-center mb-3">
           {isHealthy ? (
-            <CheckCircle className="w-6 h-6 text-[#32D6A0] mr-3" />
+            <CheckCircle className="w-4 h-4 text-[#32D6A0] mr-2" />
           ) : (
-            <AlertTriangle className="w-6 h-6 text-amber-600 mr-3" />
+            <AlertTriangle className="w-4 h-4 text-amber-600 mr-2" />
           )}
-          <h3 className="text-xl font-bold text-[#0E1117]">
+          <h3 className="text-base font-bold text-[#0E1117]">
             {isHealthy ? 'Great Job! 🎉' : 'Action Needed 💪'}
           </h3>
         </div>
-        <p className="text-gray-700 leading-relaxed">
+        <p className="text-gray-700 text-xs md:text-sm">
           {isHealthy ? 
             "🌟 Your emergency fund is solid! You're ready to invest with confidence knowing you have a safety net." :
             `📢 You're missing ₹${gap.toLocaleString()} in emergency buffer. Consider building this alongside your investments for complete financial security.`
           }
         </p>
         {!isHealthy && (
-          <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
-            <p className="text-amber-800 font-medium">💡 Pro Tip:</p>
-            <p className="text-amber-700 text-sm">
+          <div className="mt-3 p-3 bg-amber-50 rounded-lg border border-amber-200">
+            <p className="text-amber-800 font-medium text-xs">💡 Pro Tip:</p>
+            <p className="text-amber-700 text-xs">
               Start with 50% for investments and 50% for emergency fund until you reach your target emergency corpus.
             </p>
           </div>
@@ -672,15 +638,16 @@ const EmergencyFundStep = ({ recommendation, onNext }) => {
       </Card>
 
       <div className="text-center">
-        <Button variant="primary" size="lg" onClick={onNext}>
+        <Button variant="primary" size="lg" onClick={onNext} className="w-full sm:w-auto">
           Tax Optimization Next 💸
-          <ArrowRight className="ml-2 w-5 h-5" />
+          <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
       </div>
     </div>
   );
 };
 
+// Updated TaxOptimizationStep component
 const TaxOptimizationStep = ({ recommendation, onNext }) => {
   const taxOpt = recommendation.tax_optimization || {};
   const elssRec = recommendation.elss_recommendation || {};
@@ -692,88 +659,83 @@ const TaxOptimizationStep = ({ recommendation, onNext }) => {
   const ltcgBenefit = taxOpt.ltcg_benefit_applicable;
   const taxNotes = taxOpt.notes || [];
   const investmentRatio = affordability.investment_ratio_percent || 0;
-
-  // Calculate potential tax savings if not provided
-  const estimatedTaxSavings = taxSavings || (elssAmount * 0.3); // 30% of ELSS amount for 30% bracket
+  const estimatedTaxSavings = taxSavings || (elssAmount * 0.3);
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 px-4">
       <div className="text-center">
-        <div className="text-6xl mb-4">💸</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[#0E1117] mb-4">
+        <div className="text-4xl mb-3">💸</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           Smart Tax Optimization
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           Maximize your returns while minimizing your tax burden
         </p>
       </div>
 
-      {/* Tax Bracket Info */}
       <Card variant="info" className="text-center">
-        <div className="flex items-center justify-center mb-4">
-          <Calculator className="w-8 h-8 text-blue-600 mr-3" />
-          <h3 className="text-xl font-bold text-[#0E1117]">Your Tax Profile 📊</h3>
+        <div className="flex items-center justify-center mb-3">
+          <Calculator className="w-4 h-4 text-blue-600 mr-2" />
+          <h3 className="text-base font-bold text-[#0E1117]">Your Tax Profile 📊</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <div className="text-2xl font-bold text-blue-600">{taxBracket}</div>
-            <div className="text-sm text-gray-600">Tax Bracket</div>
+            <div className="text-xl font-bold text-blue-600">{taxBracket}</div>
+            <div className="text-xs text-gray-600">Tax Bracket</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-purple-600">{investmentRatio.toFixed(1)}%</div>
-            <div className="text-sm text-gray-600">Investment Ratio</div>
+            <div className="text-xl font-bold text-purple-600">{investmentRatio.toFixed(1)}%</div>
+            <div className="text-xs text-gray-600">Investment Ratio</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-green-600">
+            <div className="text-xl font-bold text-green-600">
               {ltcgBenefit ? 'Yes' : 'No'}
             </div>
-            <div className="text-sm text-gray-600">LTCG Benefits</div>
+            <div className="text-xs text-gray-600">LTCG Benefits</div>
           </div>
         </div>
       </Card>
 
-      {/* ELSS Recommendation */}
       {elssAmount > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Card variant="secondary" className="text-center">
-            <Zap className="w-8 h-8 text-[#32D6A0] mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-[#0E1117] mb-2">ELSS Investment ⚡</h3>
-            <div className="text-3xl font-bold text-[#32D6A0] mb-2">
+            <Zap className="w-6 h-6 text-[#32D6A0] mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-[#0E1117] mb-2">ELSS Investment ⚡</h3>
+            <div className="text-xl font-bold text-[#32D6A0] mb-2">
               ₹{elssAmount.toLocaleString()}
             </div>
-            <p className="text-sm text-gray-600">Section 80C Tax Saver</p>
-            <div className="mt-3 text-xs text-gray-500">
+            <p className="text-xs text-gray-600">Section 80C Tax Saver</p>
+            <div className="mt-2 text-xs text-gray-500">
               3-year lock-in period
             </div>
           </Card>
 
           <Card variant="success" className="text-center">
-            <DollarSign className="w-8 h-8 text-green-600 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-[#0E1117] mb-2">Tax Savings 🎉</h3>
-            <div className="text-3xl font-bold text-green-600 mb-2">
+            <DollarSign className="w-6 h-6 text-green-600 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-[#0E1117] mb-2">Tax Savings 🎉</h3>
+            <div className="text-xl font-bold text-green-600 mb-2">
               ₹{estimatedTaxSavings.toLocaleString()}
             </div>
-            <p className="text-sm text-gray-600">Annual Tax Relief</p>
-            <div className="mt-3 text-xs text-green-700 font-medium">
+            <p className="text-xs text-gray-600">Annual Tax Relief</p>
+            <div className="mt-2 text-xs text-green-700 font-medium">
               {Math.round((estimatedTaxSavings / elssAmount) * 100)}% instant return!
             </div>
           </Card>
         </div>
       )}
 
-      {/* LTCG Benefits */}
       {ltcgBenefit && (
         <Card variant="warning">
-          <div className="flex items-center mb-4">
-            <Trophy className="w-6 h-6 text-amber-600 mr-3" />
-            <h3 className="text-xl font-bold text-amber-800">Long Term Benefits 🏆</h3>
+          <div className="flex items-center mb-3">
+            <Trophy className="w-4 h-4 text-amber-600 mr-2" />
+            <h3 className="text-base font-bold text-amber-800">Long Term Benefits 🏆</h3>
           </div>
-          <p className="text-amber-700 leading-relaxed mb-4">
+          <p className="text-amber-700 text-xs md:text-sm mb-3">
             💰 <strong>LTCG Tax Advantage:</strong> Hold your equity investments for more than 1 year to qualify for 
             Long Term Capital Gains tax of only 10% (on gains above ₹1,00,000 per year).
           </p>
-          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
-            <p className="text-amber-800 text-sm">
+          <div className="bg-amber-50 rounded-lg p-3 border border-amber-200">
+            <p className="text-amber-800 text-xs">
               <strong>Pro Tip:</strong> This can save you significant tax compared to short-term capital gains 
               which are taxed at 15% with no exemption limit.
             </p>
@@ -781,31 +743,29 @@ const TaxOptimizationStep = ({ recommendation, onNext }) => {
         </Card>
       )}
 
-      {/* Tax Notes */}
       {taxNotes.length > 0 && (
         <Card>
-          <div className="flex items-center mb-4">
-            <BookOpen className="w-6 h-6 text-gray-600 mr-3" />
-            <h3 className="text-xl font-bold text-[#0E1117]">Tax Planning Notes 📋</h3>
+          <div className="flex items-center mb-3">
+            <BookOpen className="w-4 h-4 text-gray-600 mr-2" />
+            <h3 className="text-base font-bold text-[#0E1117]">Tax Planning Notes 📋</h3>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {taxNotes.map((note, index) => (
-              <div key={index} className="flex items-start bg-gray-50 rounded-lg p-3">
-                <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-700 text-sm">{note}</span>
+              <div key={index} className="flex items-start bg-gray-50 rounded-lg p-2">
+                <CheckCircle className="w-3 h-3 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-700 text-xs">{note}</span>
               </div>
             ))}
           </div>
         </Card>
       )}
 
-      {/* Action Summary */}
       <Card className="text-center bg-gradient-to-r from-green-50 to-blue-50 border border-green-200">
-        <div className="flex items-center justify-center mb-4">
-          <Calculator className="w-6 h-6 text-green-600 mr-2" />
-          <span className="font-semibold text-green-800">Tax Optimization Summary</span>
+        <div className="flex items-center justify-center mb-3">
+          <Calculator className="w-4 h-4 text-green-600 mr-2" />
+          <span className="text-sm font-semibold">Tax Optimization Summary</span>
         </div>
-        <p className="text-green-700 leading-relaxed">
+        <p className="text-green-700 text-xs md:text-sm">
           {elssAmount > 0 ? 
             `🎯 By strategically investing ₹${elssAmount.toLocaleString()} in ELSS and holding equity investments long-term, you could save approximately ₹${estimatedTaxSavings.toLocaleString()} in taxes annually!` :
             `💡 Consider tax-saving investments like ELSS funds to optimize your tax liability while building wealth.`
@@ -814,19 +774,20 @@ const TaxOptimizationStep = ({ recommendation, onNext }) => {
       </Card>
 
       <div className="text-center">
-        <Button variant="primary" size="lg" onClick={onNext}>
+        <Button variant="primary" size="lg" onClick={onNext} className="w-full sm:w-auto">
           AI Insights and Analysis
-          <ArrowRight className="ml-2 w-5 h-5" />
+          <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
       </div>
     </div>
   );
 };
+
+// Updated SmartNotesStep component
 const SmartNotesStep = ({ recommendation, onNext }) => {
   const notes = recommendation.notes || [];
   const llmFeedback = recommendation.llm_feedback || "";
   
-  // Parse and categorize notes
   const categorizeNote = (note) => {
     if (note.includes('Goal Corpus') || note.includes('Target')) return { type: 'goal', icon: Target, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-200' };
     if (note.includes('SIP') || note.includes('Monthly')) return { type: 'sip', icon: Coins, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-200' };
@@ -838,7 +799,6 @@ const SmartNotesStep = ({ recommendation, onNext }) => {
     return { type: 'general', icon: Sparkles, color: 'text-gray-600', bg: 'bg-gray-50', border: 'border-gray-200' };
   };
 
-  // Parse LLM feedback sections
   const parseLLMFeedback = (feedback) => {
     if (!feedback) return null;
     
@@ -851,47 +811,39 @@ const SmartNotesStep = ({ recommendation, onNext }) => {
       return { title, content };
     });
   };
-  
-  // Add this new function to format markdown text
+
   const formatMarkdownText = (text) => {
     if (!text) return text;
     
     return text
-      // Convert **text** to bold
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      // Convert numbered lists (1. 2. 3. etc.)
-      .replace(/^\d+\.\s+(.+)$/gm, '<div class="ml-4 mb-2">• $1</div>')
-      // Convert bullet points starting with -
-      .replace(/^-\s+(.+)$/gm, '<div class="ml-4 mb-2">• $1</div>')
-      // Remove extra asterisks and cleanup
+      .replace(/^\d+\.\s+(.+)$/gm, '<div class="ml-4 mb-1">• $1</div>')
+      .replace(/^-\s+(.+)$/gm, '<div class="ml-4 mb-1">• $1</div>')
       .replace(/\*+/g, '')
-      // Clean up any remaining markdown artifacts
       .replace(/#+\s*/g, '');
   };
-  
 
   const feedbackSections = parseLLMFeedback(llmFeedback);
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 px-4">
       <div className="text-center">
-        <div className="text-6xl mb-4">🧠</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[#0E1117] mb-4">
+        <div className="text-4xl mb-3">🧠</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           AI Insights & Analysis
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           Detailed breakdown of your personalized investment strategy
         </p>
       </div>
 
-      {/* Key Insights from Notes */}
       {notes.length > 0 && (
         <Card>
-          <div className="flex items-center mb-6">
-            <Sparkles className="w-6 h-6 text-[#FF5E5B] mr-3" />
-            <h2 className="text-xl font-bold text-[#0E1117]">Key Insights 💡</h2>
+          <div className="flex items-center mb-4">
+            <Sparkles className="w-4 h-4 text-[#FF5E5B] mr-2" />
+            <h2 className="text-base md:text-lg font-bold text-[#0E1117]">Key Insights 💡</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {notes.map((note, index) => {
               const category = categorizeNote(note);
               const IconComponent = category.icon;
@@ -899,11 +851,11 @@ const SmartNotesStep = ({ recommendation, onNext }) => {
               return (
                 <div 
                   key={index}
-                  className={`p-4 rounded-lg border ${category.bg} ${category.border} transition-all duration-300 hover:shadow-md`}
+                  className={`p-3 rounded-lg border ${category.bg} ${category.border} transition-all duration-300 hover:shadow-md`}
                 >
                   <div className="flex items-start">
-                    <IconComponent className={`w-5 h-5 ${category.color} mr-3 mt-0.5 flex-shrink-0`} />
-                    <p className="text-gray-700 text-sm leading-relaxed">
+                    <IconComponent className={`w-4 h-4 ${category.color} mr-2 mt-0.5 flex-shrink-0`} />
+                    <p className="text-gray-700 text-xs">
                       {note.replace(/[🎯💸📈🧠💒📊💰]/g, '').trim()}
                     </p>
                   </div>
@@ -914,39 +866,39 @@ const SmartNotesStep = ({ recommendation, onNext }) => {
         </Card>
       )}
 
-      {/* LLM Professional Analysis */}
       {feedbackSections && feedbackSections.length > 0 && (
-  <Card variant="info">
-    <div className="flex items-center mb-6">
-      <Brain className="w-6 h-6 text-blue-600 mr-3" />
-      <h2 className="text-xl font-bold text-[#0E1117]">Professional Analysis 🎯</h2>
-    </div>
-    <div className="space-y-6">
-      {feedbackSections.map((section, index) => (
-        <div key={index} className="border-l-4 border-blue-400 pl-4">
-          <h3 className="font-semibold text-gray-900 mb-3 text-lg">{section.title}</h3>
-          <div 
-            className="text-gray-700 text-sm leading-relaxed prose prose-sm max-w-none"
-            dangerouslySetInnerHTML={{ 
-              __html: formatMarkdownText(section.content) 
-            }}
-          />
-        </div>
-      ))}
-    </div>
-  </Card>
-)}
+        <Card variant="info">
+          <div className="flex items-center mb-4">
+            <Brain className="w-4 h-4 text-blue-600 mr-2" />
+            <h2 className="text-base md:text-lg font-bold text-[#0E1117]">Professional Analysis 🎯</h2>
+          </div>
+          <div className="space-y-4">
+            {feedbackSections.map((section, index) => (
+              <div key={index} className="border-l-4 border-blue-400 pl-3">
+                <h3 className="font-semibold text-gray-900 mb-2 text-base">{section.title}</h3>
+                <div 
+                  className="text-gray-700 text-xs prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ 
+                    __html: formatMarkdownText(section.content) 
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
 
       <div className="text-center">
-        <Button variant="primary" size="lg" onClick={onNext}>
+        <Button variant="primary" size="lg" onClick={onNext} className="w-full sm:w-auto">
           Portfolio Health Flag 📊
-          <ArrowRight className="ml-2 w-5 h-5" />
+          <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
       </div>
     </div>
   );
 };
-// Continuing from where SmartScoreStep was cut off...
+
+// Updated FlagsInsightStep component
 const FlagsInsightStep = ({ recommendation, onNext }) => {
   const flags = recommendation.flags || [];
   const alerts = recommendation.alerts || [];
@@ -1043,64 +995,62 @@ const FlagsInsightStep = ({ recommendation, onNext }) => {
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 px-4">
       <div className="text-center">
-        <div className="text-6xl mb-4">🚩</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[#0E1117] mb-4">
+        <div className="text-4xl mb-3">🚩</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           Portfolio Health Flags
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           Key areas to focus on for optimal portfolio performance
         </p>
       </div>
 
-      {/* Alerts Section */}
       {alerts.length > 0 && (
         <Card variant="warning">
-          <div className="flex items-center mb-4">
-            <AlertTriangle className="w-6 h-6 text-amber-600 mr-3" />
-            <h2 className="text-xl font-bold text-amber-800">Active Alerts 🚨</h2>
+          <div className="flex items-center mb-3">
+            <AlertTriangle className="w-4 h-4 text-amber-600 mr-2" />
+            <h2 className="text-base md:text-lg font-bold text-amber-800">Active Alerts 🚨</h2>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {alerts.map((alert, index) => (
-              <div key={index} className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+              <div key={index} className="bg-amber-50 rounded-lg p-3 border border-amber-200">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold text-amber-800 capitalize">
+                  <h3 className="text-sm font-semibold text-amber-800 capitalize">
                     {alert.type?.replace(/_/g, ' ')} - {alert.severity?.toUpperCase()}
                   </h3>
                   <span className="text-xs text-amber-600">
                     {new Date(alert.timestamp).toLocaleDateString()}
                   </span>
                 </div>
-                <p className="text-amber-700 text-sm">{alert.message}</p>
+                <p className="text-amber-700 text-xs">{alert.message}</p>
               </div>
             ))}
           </div>
         </Card>
       )}
 
-      {/* Grouped Flags */}
       {severityOrder.map(severity => {
         if (!groupedFlags[severity]) return null;
         
         return (
           <div key={severity}>
-            <h2 className="text-xl font-bold text-[#0E1117] mb-4 flex items-center">
+            <h2 className="text-base md:text-lg font-bold text-[#0E1117] mb-3 flex items-center">
               {severityLabels[severity]}
-              <span className="ml-2 text-sm bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+              <span className="ml-2 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
                 {groupedFlags[severity].length}
               </span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {groupedFlags[severity].map((item, index) => {
                 const IconComponent = item.icon;
                 return (
                   <Card key={index} className={`${item.bg} ${item.border} border`}>
                     <div className="flex items-start">
-                      <IconComponent className={`w-6 h-6 ${item.color} mr-3 mt-1 flex-shrink-0`} />
+                      <IconComponent className={`w-4 h-4 ${item.color} mr-2 mt-1 flex-shrink-0`} />
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
-                        <p className="text-gray-700 text-sm mb-3 leading-relaxed">
+                        <h3 className="text-sm font-semibold text-gray-900 mb-2">{item.title}</h3>
+                        <p className="text-gray-700 text-xs mb-2">
                           {item.description}
                         </p>
                         <div className="bg-white/50 rounded-lg p-2 border border-white/30">
@@ -1120,23 +1070,25 @@ const FlagsInsightStep = ({ recommendation, onNext }) => {
 
       {flags.length === 0 && (
         <Card variant="success" className="text-center">
-          <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-green-800 mb-4">All Clear! 🎉</h3>
-          <p className="text-green-700 leading-relaxed">
+          <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-green-800 mb-3">All Clear! 🎉</h3>
+          <p className="text-green-700 text-xs md:text-sm">
             Your portfolio looks great with no major flags. Keep up the excellent work!
           </p>
         </Card>
       )}
 
       <div className="text-center">
-        <Button variant="primary" size="lg" onClick={onNext}>
-        Portfolio Health Check
-          <ArrowRight className="ml-2 w-5 h-5" />
+        <Button variant="primary" size="lg" onClick={onNext} className="w-full sm:w-auto">
+          Portfolio Health Check
+          <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
       </div>
     </div>
   );
 };
+
+// Updated SmartScoreStep component
 const SmartScoreStep = ({ recommendation, onNext }) => {
   const riskScore = recommendation.portfolio_risk_score || 0;
   const diversificationScore = recommendation.diversification_score || 0;
@@ -1150,9 +1102,9 @@ const SmartScoreStep = ({ recommendation, onNext }) => {
   };
 
   const getScoreIcon = (score) => {
-    if (score >= 80) return <CheckCircle className="w-6 h-6 text-green-600" />;
-    if (score >= 60) return <AlertTriangle className="w-6 h-6 text-yellow-600" />;
-    return <AlertTriangle className="w-6 h-6 text-red-600" />;
+    if (score >= 80) return <CheckCircle className="w-4 h-4 text-green-600" />;
+    if (score >= 60) return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
+    return <AlertTriangle className="w-4 h-4 text-red-600" />;
   };
 
   const getScoreText = (score) => {
@@ -1162,40 +1114,40 @@ const SmartScoreStep = ({ recommendation, onNext }) => {
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 px-4">
       <div className="text-center">
-        <div className="text-6xl mb-4">📊</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[#0E1117] mb-4">
+        <div className="text-4xl mb-3">📊</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           Portfolio Health Check
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           How does your investment strategy score on key metrics?
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Card className="text-center">
-          <div className="flex items-center justify-center mb-4">
+          <div className="flex items-center justify-center mb-3">
             {getScoreIcon(riskScore)}
-            <h3 className="text-lg font-semibold text-[#0E1117] ml-2">Risk Score 🎯</h3>
+            <h3 className="text-base font-semibold text-[#0E1117] ml-2">Risk Score 🎯</h3>
           </div>
-          <div className={`text-3xl font-bold mb-2 ${getScoreColor(riskScore)}`}>
+          <div className={`text-xl font-bold mb-2 ${getScoreColor(riskScore)}`}>
             {riskScore}/100
           </div>
-          <p className={`text-sm font-medium ${getScoreColor(riskScore)}`}>
+          <p className={`text-xs font-medium ${getScoreColor(riskScore)}`}>
             {getScoreText(riskScore)}
           </p>
         </Card>
 
         <Card className="text-center">
-          <div className="flex items-center justify-center mb-4">
+          <div className="flex items-center justify-center mb-3">
             {getScoreIcon(diversificationScore)}
-            <h3 className="text-lg font-semibold text-[#0E1117] ml-2">Diversification 🌈</h3>
+            <h3 className="text-base font-semibold text-[#0E1117] ml-2">Diversification 🌈</h3>
           </div>
-          <div className={`text-3xl font-bold mb-2 ${getScoreColor(diversificationScore)}`}>
+          <div className={`text-xl font-bold mb-2 ${getScoreColor(diversificationScore)}`}>
             {diversificationScore}/100
           </div>
-          <p className={`text-sm font-medium ${getScoreColor(diversificationScore)}`}>
+          <p className={`text-xs font-medium ${getScoreColor(diversificationScore)}`}>
             {getScoreText(diversificationScore)}
           </p>
         </Card>
@@ -1203,14 +1155,14 @@ const SmartScoreStep = ({ recommendation, onNext }) => {
 
       {hasWarnings && (
         <Card variant="warning">
-          <div className="flex items-center mb-4">
-            <AlertTriangle className="w-6 h-6 text-amber-600 mr-3" />
-            <h3 className="text-xl font-bold text-amber-800">Things to Watch 👀</h3>
+          <div className="flex items-center mb-3">
+            <AlertTriangle className="w-4 h-4 text-amber-600 mr-2" />
+            <h3 className="text-base font-bold text-amber-800">Things to Watch 👀</h3>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {flags.map((flag, i) => (
-              <div key={i} className="flex items-start bg-amber-50 rounded-lg p-3">
-                <span className="text-amber-700 leading-relaxed">• {flag}</span>
+              <div key={i} className="flex items-start bg-amber-50 rounded-lg p-2">
+                <span className="text-amber-700 text-xs">• {flag}</span>
               </div>
             ))}
           </div>
@@ -1218,11 +1170,11 @@ const SmartScoreStep = ({ recommendation, onNext }) => {
       )}
 
       <Card className="text-center">
-        <div className="flex items-center justify-center mb-4">
-          <BarChart3 className="w-6 h-6 text-blue-600 mr-2" />
-          <span className="font-semibold">Overall Assessment</span>
+        <div className="flex items-center justify-center mb-3">
+          <BarChart3 className="w-4 h-4 text-blue-600 mr-2" />
+          <span className="text-sm font-semibold">Overall Assessment</span>
         </div>
-        <p className="text-gray-700 leading-relaxed">
+        <p className="text-gray-700 text-xs md:text-sm">
           {riskScore >= 70 && diversificationScore >= 70 ? 
             "🎉 Great job! Your portfolio looks well-balanced and aligned with your risk profile." :
             riskScore >= 50 && diversificationScore >= 50 ?
@@ -1233,24 +1185,23 @@ const SmartScoreStep = ({ recommendation, onNext }) => {
       </Card>
 
       <div className="text-center">
-        <Button variant="primary" size="lg" onClick={onNext}>
+        <Button variant="primary" size="lg" onClick={onNext} className="w-full sm:w-auto">
           Final Summary 📋
-          <ArrowRight className="ml-2 w-5 h-5" />
+          <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
       </div>
     </div>
   );
 };
-// Add this new component after the existing Card component (around line 90)
 
-// Beta Access Modal Component
+// Updated BetaAccessModal component
 const BetaAccessModal = ({ isOpen, onClose, recommendation }) => {
   const [betaEmail, setBetaEmail] = useState("");
   const [wantAccess, setWantAccess] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
   const apiUrl = `${config.apiUrl}/beta/submit`;
-  // Email validation
+
   useEffect(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setIsValidEmail(emailRegex.test(betaEmail));
@@ -1305,44 +1256,42 @@ const BetaAccessModal = ({ isOpen, onClose, recommendation }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full mx-4 overflow-hidden transform transition-all duration-300">
+      <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full mx-auto">
         {!isSubmitted ? (
           <>
-            {/* Header */}
-            <div className="bg-gradient-to-r from-[#FF5E5B] to-[#FF8A65] p-6 text-white text-center relative">
+            <div className="bg-gradient-to-r from-[#FF5E5B] to-[#FF8A65] p-4 text-white text-center relative">
               <button
                 onClick={handleClose}
-                className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
+                className="absolute top-3 right-3 text-white/80 hover:text-white"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <div className="text-4xl mb-3">🚀</div>
-              <h3 className="text-2xl font-bold mb-2">
+              <div className="text-3xl mb-2">🚀</div>
+              <h3 className="text-lg font-bold mb-2">
                 Your Goal just got real! 🌍
               </h3>
-              <p className="text-white/90 text-sm">
+              <p className="text-white/90 text-xs">
                 Be the first to start building your ₹{recommendation?.target_corpus?.toLocaleString()} dream fund
               </p>
             </div>
 
-            {/* Content */}
-            <div className="p-6">
-              <div className="mb-6 text-center">
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-medium mb-4">
-                  <Zap className="w-4 h-4 mr-1" />
+            <div className="p-4">
+              <div className="mb-4 text-center">
+                <div className="inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-600 text-xs font-medium mb-3">
+                  <Zap className="w-3 h-3 mr-1" />
                   Alpha Version
                 </div>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 text-xs">
                   We're putting the finishing touches on our investment platform. 
                   Get notified the moment we go live!
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
                     📩 Email Address
                   </label>
                   <input
@@ -1350,19 +1299,19 @@ const BetaAccessModal = ({ isOpen, onClose, recommendation }) => {
                     value={betaEmail}
                     onChange={(e) => setBetaEmail(e.target.value)}
                     placeholder="your.email@example.com"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FF5E5B] focus:border-transparent transition-colors"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-[#FF5E5B] focus:border-transparent"
                     required
                   />
                 </div>
 
-                <label className="flex items-start space-x-3 cursor-pointer">
+                <label className="flex items-start space-x-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={wantAccess}
                     onChange={(e) => setWantAccess(e.target.checked)}
-                    className="mt-1 w-4 h-4 text-[#FF5E5B] border-gray-300 rounded focus:ring-[#FF5E5B]"
+                    className="mt-0.5 w-3 h-3 text-[#FF5E5B] border-gray-300 rounded focus:ring-[#FF5E5B]"
                   />
-                  <span className="text-sm text-gray-600 leading-relaxed">
+                  <span className="text-xs text-gray-600">
                     ✅ I want early access to beta features and exclusive investment insights
                   </span>
                 </label>
@@ -1374,26 +1323,25 @@ const BetaAccessModal = ({ isOpen, onClose, recommendation }) => {
                   className="w-full"
                   disabled={!isValidEmail}
                 >
-                  <Sparkles className="w-5 h-5 mr-2" />
+                  <Sparkles className="w-4 h-4 mr-2" />
                   Notify Me When Live
                 </Button>
               </form>
 
-              <p className="text-xs text-gray-500 text-center mt-4">
+              <p className="text-xs text-gray-500 text-center mt-3">
                 No spam, just updates when we launch. Unsubscribe anytime.
               </p>
             </div>
           </>
         ) : (
-          /* Success State */
-          <div className="p-8 text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-green-600" />
+          <div className="p-6 text-center">
+            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <CheckCircle className="w-6 h-6 text-green-600" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">
               You're all set! 🎉
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 text-xs mb-4">
               Thanks! We'll notify you when we launch beta access. 
               Your investment journey is about to begin!
             </p>
@@ -1401,7 +1349,7 @@ const BetaAccessModal = ({ isOpen, onClose, recommendation }) => {
               {[0, 1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="w-2 h-2 bg-[#32D6A0] rounded-full animate-pulse"
+                  className="w-1.5 h-1.5 bg-[#32D6A0] rounded-full animate-pulse"
                   style={{ animationDelay: `${i * 0.2}s` }}
                 />
               ))}
@@ -1413,15 +1361,17 @@ const BetaAccessModal = ({ isOpen, onClose, recommendation }) => {
   );
 };
 
+// Updated SummaryFeedbackStep component
 const SummaryFeedbackStep = ({ recommendation, onRestart }) => {
   const funds = getFundsFromRecommendation(recommendation);
   const navigate = useNavigate();
-  // Ensure funds is always an array
   const safeFunds = Array.isArray(funds) ? funds : [];
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(null);
   const [showThanks, setShowThanks] = useState(false);
   const [showBetaModal, setShowBetaModal] = useState(false);
+  const apiUrl = `${config.apiUrl}/feedback/submit-feedback`;
+
   const handleFeedback = (type) => {
     setRating(type);
     if (type === 'positive') {
@@ -1430,7 +1380,6 @@ const SummaryFeedbackStep = ({ recommendation, onRestart }) => {
       setTimeout(() => setShowThanks(false), 3000);
     }
   };
-  const apiUrl = `${config.apiUrl}/feedback/submit-feedback`;
 
   const submitFeedback = async () => {
     const userId = sessionStorage.getItem("userId");
@@ -1470,119 +1419,118 @@ const SummaryFeedbackStep = ({ recommendation, onRestart }) => {
       console.error("❌ Failed to submit feedback:", error.message || error);
     }
   };
-  
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 px-4">
       <div className="text-center">
-        <div className="text-6xl mb-4">🎯</div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[#0E1117] mb-4">
+        <div className="text-4xl mb-3">🎯</div>
+        <h1 className="text-xl md:text-2xl font-bold text-[#0E1117] mb-3">
           Your Investment Plan is Ready!
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-gray-600 max-w-lg mx-auto">
           You're all set to start building wealth. How does this plan feel to you?
         </p>
       </div>
 
       <Card variant="success" className="text-center">
-        <div className="flex items-center justify-center mb-6">
-          <Trophy className="w-8 h-8 text-[#32D6A0] mr-3" />
-          <h3 className="text-xl font-bold text-[#0E1117]">Plan Complete ✨</h3>
+        <div className="flex items-center justify-center mb-4">
+          <Trophy className="w-6 h-6 text-[#32D6A0] mr-2" />
+          <h3 className="text-base md:text-lg font-bold text-[#0E1117]">Plan Complete ✨</h3>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-[#FF5E5B]">
+            <div className="text-xl font-bold text-[#FF5E5B]">
               ₹{recommendation.suggested_sip?.toLocaleString()}
             </div>
-            <div className="text-sm text-gray-600">Monthly SIP</div>
+            <div className="text-xs text-gray-600">Monthly SIP</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-[#32D6A0]">
+            <div className="text-xl font-bold text-[#32D6A0]">
               ₹{recommendation.target_corpus?.toLocaleString()}
             </div>
-            <div className="text-sm text-gray-600">Target Corpus</div>
+            <div className="text-xs text-gray-600">Target Corpus</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="text-xl font-bold text-blue-600">
               {(recommendation.recommended_allocation?.equity*100).toFixed(2) || 0}%
             </div>
-            <div className="text-sm text-gray-600">Equity</div>
+            <div className="text-xs text-gray-600">Equity</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-amber-600">
-              { safeFunds.length || 0}
+            <div className="text-xl font-bold text-amber-600">
+              {safeFunds.length || 0}
             </div>
-            <div className="text-sm text-gray-600">Funds</div>
+            <div className="text-xs text-gray-600">Funds</div>
           </div>
         </div>
 
-        <p className="text-gray-700 leading-relaxed">
+        <p className="text-gray-700 text-xs md:text-sm">
           🌟 This personalized strategy is designed to help you reach your financial goals 
           while matching your risk tolerance and investment timeline.
         </p>
       </Card>
 
       <Card>
-        <div className="text-center mb-6">
-          <h3 className="text-xl font-bold text-[#0E1117] mb-4">
+        <div className="text-center mb-4">
+          <h3 className="text-base md:text-lg font-bold text-[#0E1117] mb-3">
             Does this plan feel right for you? 🤔
           </h3>
           
           {!rating && (
-            <div className="flex justify-center space-x-4 mb-6">
+            <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-3 mb-4">
               <Button 
                 variant="feedback" 
                 size="lg"
                 onClick={() => handleFeedback('positive')}
-                className="flex items-center"
+                className="flex items-center w-full sm:w-auto"
               >
-                <ThumbsUp className="w-5 h-5 mr-2" />
+                <ThumbsUp className="w-4 h-4 mr-2" />
                 Love it! 😍
               </Button>
               <Button 
                 variant="feedback" 
                 size="lg"
                 onClick={() => handleFeedback('negative')}
-                className="flex items-center"
+                className="flex items-center w-full sm:w-auto"
               >
-                <ThumbsDown className="w-5 h-5 mr-2" />
+                <ThumbsDown className="w-4 h-4 mr-2" />
                 Needs work 🤔
               </Button>
             </div>
           )}
 
           {rating === 'positive' && !showThanks && (
-            <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <div className="bg-green-50 rounded-lg p-3 border border-green-200">
               <div className="flex items-center justify-center mb-2">
-                <Star className="w-5 h-5 text-green-600 mr-2" />
-                <span className="font-medium text-green-800">Awesome! 🎉</span>
+                <Star className="w-4 h-4 text-green-600 mr-2" />
+                <span className="text-sm font-medium text-green-800">Awesome! 🎉</span>
               </div>
-              <p className="text-green-700 text-sm">
+              <p className="text-green-700 text-xs">
                 We're thrilled you love your plan! Ready to start investing?
               </p>
             </div>
           )}
 
           {rating === 'negative' && (
-            <div className="space-y-4">
-              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <div className="space-y-3">
+              <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
                 <div className="flex items-center justify-center mb-2">
-                  <MessageSquare className="w-5 h-5 text-blue-600 mr-2" />
-                  <span className="font-medium text-blue-800">Help us improve 💪</span>
+                  <MessageSquare className="w-4 h-4 text-blue-600 mr-2" />
+                  <span className="text-sm font-medium text-blue-800">Help us improve 💪</span>
                 </div>
                 <textarea
                   value={feedback}
                   onChange={(e) => setFeedback(e.target.value)}
                   placeholder="What would make this plan better for you? (Optional)"
-                  className="w-full p-3 border border-blue-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-2 border border-blue-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   rows="3"
                 />
                 <Button 
                   variant="secondary" 
                   size="sm" 
                   onClick={submitFeedback}
-                  className="mt-3"
+                  className="mt-2 w-full"
                 >
                   Send Feedback
                 </Button>
@@ -1591,43 +1539,48 @@ const SummaryFeedbackStep = ({ recommendation, onRestart }) => {
           )}
 
           {showThanks && (
-            <div className="bg-[#32D6A0]/10 rounded-lg p-4 border border-[#32D6A0]/20">
+            <div className="bg-[#32D6A0]/10 rounded-lg p-3 border border-[#32D6A0]/20">
               <div className="flex items-center justify-center">
-                <CheckCircle className="w-6 h-6 text-[#32D6A0] mr-2" />
-                <span className="font-medium text-[#32D6A0]">Thank you for your feedback! 🙏</span>
+                <CheckCircle className="w-4 h-4 text-[#32D6A0] mr-2" />
+                <span className="text-sm font-medium text-[#32D6A0]">Thank you for your feedback! 🙏</span>
               </div>
             </div>
           )}
         </div>
       </Card>
 
-      <div className="text-center space-y-4">
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button 
-  variant="primary" 
-  size="xl" 
-  onClick={() => setShowBetaModal(true)}
->
-  Start Investing Now 🚀
-</Button>
-          <Button variant="outline" size="xl"  onClick={() => navigate('/profile')}>
-            Create New Plan 🔄
-          </Button>
-        </div>
-        <p className="text-gray-500 text-sm">
-          Questions? Our investment advisors are here to help you get started.
-        </p>
-      </div>
-      <BetaAccessModal 
-        isOpen={showBetaModal}
-        onClose={() => setShowBetaModal(false)}
-        recommendation={recommendation}
-      />
-    </div>
-  );
-};
+      <div className="text-center space-y-6 md:space-y-8">
+  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+    <Button 
+      variant="primary" 
+      size="xl" 
+      onClick={() => setShowBetaModal(true)}
+      className="w-full sm:w-auto min-w-[180px] text-sm sm:text-base md:text-lg"
+    >
+      Start Investing Now 🚀
+    </Button>
+    <Button 
+      variant="outline" 
+      size="xl" 
+      onClick={() => navigate('/profile')}
+      className="w-full sm:w-auto min-w-[180px] text-sm sm:text-base md:text-lg"
+    >
+      Create New Plan 🔄
+    </Button>
+  </div>
+  <p className="text-gray-500 text-xs sm:text-sm md:text-base max-w-md mx-auto">
+    Questions? Our investment advisors are here to help you get started.
+  </p>
+</div>
+<BetaAccessModal 
+  isOpen={showBetaModal}
+  onClose={() => setShowBetaModal(false)}
+  recommendation={recommendation}
+/>
+</div>
+ );
 
-// Main RecommendationPage Component with Step Navigation
+};
 const RecommendationPage = () => {
   const [recommendation, setRecommendation] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -1678,6 +1631,7 @@ const RecommendationPage = () => {
         setRecommendation(data);
       } catch (err) {
         console.error("Failed to fetch recommendation", err);
+        setErrorMsg("Unable to generate recommendations. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -1749,34 +1703,34 @@ const RecommendationPage = () => {
       <AppHeader showBackButton={true} onBackButtonClick={handleBackClick} showNavLinks={false} />
 
       {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-6 py-8 md:py-12 mt-20">
+      <div className="max-w-full sm:max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12 mt-16 sm:mt-20">
         {/* Loading State */}
         {loading && <LoadingRecommendations />}
 
         {/* Error State */}
         {errorMsg && !loading && (
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             <div className="text-center">
-              <div className="inline-flex items-center px-4 py-2 rounded-full mb-6 bg-red-100 text-red-600">
+              <div className="inline-flex items-center px-3 py-1.5 rounded-full mb-4 sm:mb-6 bg-red-100 text-red-600 text-xs sm:text-sm">
                 <AlertTriangle className="w-4 h-4 mr-2" />
-                <span className="text-sm font-medium">Error Occurred</span>
+                <span className="font-medium">Error Occurred</span>
               </div>
-              <h1 className="text-3xl md:text-5xl font-bold text-[#0E1117] mb-4 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0E1117] mb-3 sm:mb-4 leading-tight">
                 Oops! Something went wrong
               </h1>
             </div>
             
-            <Card variant="warning" className="border-l-4 border-red-400">
+            <Card variant="warning" className="border-l-4 border-red-400 p-4 sm:p-6">
               <div className="flex items-start">
-                <AlertTriangle className="w-6 h-6 text-red-500 mr-3 flex-shrink-0 mt-1" />
+                <AlertTriangle className="w-5 sm:w-6 h-6 text-red-500 mr-2 sm:mr-3 flex-shrink-0 mt-1" />
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-red-800 mb-2">Unable to Generate Recommendations</h3>
-                  <p className="text-red-600 mb-6">{errorMsg}</p>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button variant="primary" size="md" onClick={() => window.location.reload()}>
+                  <h3 className="text-base sm:text-lg font-semibold text-red-800 mb-2">Unable to Generate Recommendations</h3>
+                  <p className="text-red-600 text-sm sm:text-base mb-4 sm:mb-6">{errorMsg}</p>
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                    <Button variant="primary" size="sm sm:md" onClick={() => window.location.reload()} className="w-full sm:w-auto">
                       Try Again
                     </Button>
-                    <Button variant="outline" size="md" onClick={handleRestart}>
+                    <Button variant="outline" size="sm sm:md" onClick={handleRestart} className="w-full sm:w-auto">
                       Start Over
                     </Button>
                   </div>
@@ -1788,7 +1742,7 @@ const RecommendationPage = () => {
 
         {/* Step-by-Step Recommendation */}
         {recommendation && !loading && (
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {/* Progress Indicator */}
             <StepProgress currentStep={currentStep} totalSteps={steps.length} />
 
@@ -1797,8 +1751,8 @@ const RecommendationPage = () => {
 
             {/* Navigation Footer */}
             {currentStep > 0 && currentStep < steps.length - 1 && (
-              <div className="flex justify-between items-center pt-8 border-t border-gray-200">
-                <Button variant="ghost" onClick={handlePrevious}>
+              <div className="flex flex-col sm:flex-row justify-between items-center pt-6 sm:pt-8 border-t border-gray-200 gap-4">
+                <Button variant="ghost" onClick={handlePrevious} className="w-full sm:w-auto text-sm sm:text-base">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Previous
                 </Button>
@@ -1812,7 +1766,7 @@ const RecommendationPage = () => {
                     />
                   ))}
                 </div>
-                <div /> {/* Spacer */}
+                <div className="hidden sm:block" /> {/* Spacer for larger screens */}
               </div>
             )}
           </div>
